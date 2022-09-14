@@ -1,5 +1,6 @@
 import { ApiError } from "../error/ApiError.js";
 import { user_auth_data, user_data } from "../models/models.js";
+import { authMiddleware } from "../middleware/authMiddleware.js";
 import * as bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
@@ -62,6 +63,11 @@ class UserAuthDataController {
     }
     const token = generateJwt(candidate.id, candidate.password);
     return res.json({ token });
+  }
+
+  async checkIsAuth(req, res, next) {
+    const token = generateJwt(req.user.id, req.user.password);
+    return res.json({ message: "Working!", token });
   }
 
   async getUserData(req, res, next) {
