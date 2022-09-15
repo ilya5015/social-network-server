@@ -27,12 +27,16 @@ class UserDataController {
 
   async updateStatus(req, res, next) {
     try {
-      const { id } = req.params;
-      const user = await user_data.findOne({ where: { id } });
-      if (!user) {
-        next(ApiError.internal("Такого пользователя не существует"));
+      const { id } = req.user;
+      const { status } = req.body;
+      const updatedUserData = await user_data.update(
+        { status },
+        { where: { id } }
+      );
+      if (!updatedUserData) {
+        next(ApiError.internal("Не удалось обновить статус"));
       } else {
-        res.json(user);
+        res.json(updatedUserData);
       }
     } catch (e) {
       next(ApiError.badRequest(e.message));
