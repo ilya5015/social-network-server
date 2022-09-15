@@ -8,16 +8,23 @@ import { user_data, user_auth_data } from "./models/models.js";
 import * as path from "path";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
+import cookieParser from "cookie-parser";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const PORT = process.env.PORT ?? 5000;
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    allowedHeaders: "Authorization",
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.static(path.resolve(__dirname, "static")));
-app.use(express.json({}));
 app.use("/api", router);
 
 // Обработка ошибок

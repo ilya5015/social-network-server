@@ -22,12 +22,12 @@ class UserAuthDataController {
     try {
       const { login, password, name, email } = req.body;
       if (!login || !password) {
-        return next(ApiError.badRequest("Некорректный login или password"));
+        return next(ApiError.internal("Некорректный login или password"));
       }
       const candidate = await user_auth_data.findOne({ where: { login } });
       if (candidate) {
         return next(
-          ApiError.badRequest("Пользователь с таким именем существует")
+          ApiError.internal("Пользователь с таким именем существует")
         );
       }
       const hashPassword = await bcrypt.hash(password, 5);
@@ -62,9 +62,11 @@ class UserAuthDataController {
       return next(ApiError.internal("Неверный password"));
     }
     const token = generateJwt(candidate.id, candidate.password);
-    return res.json({ token });
+    res.cookie("token", token);
+    return res.json();
   }
 
+  // Для проверки
   async checkIsAuth(req, res, next) {
     const token = generateJwt(req.user.id, req.user.password);
     return res.json({ message: "Working!", token });

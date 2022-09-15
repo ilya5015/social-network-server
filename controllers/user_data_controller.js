@@ -1,11 +1,42 @@
+import { ApiError } from "../error/ApiError.js";
+import { user_data } from "../models/models.js";
+
 class UserDataController {
-  async getUser(req, res) {
-    const query = req.query;
-    res.status(200).json({ message: "get user", query });
+  async getUser(req, res, next) {
+    try {
+      const { id } = req.params;
+      const user = await user_data.findOne({ where: { id } });
+      if (!user) {
+        next(ApiError.internal("Такого пользователя не существует"));
+      } else {
+        res.json(user);
+      }
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
   }
 
-  async getUsers(req, res) {
-    res.json("get users");
+  async getUsers(req, res, next) {
+    try {
+      const users = await user_data.findAll();
+      return res.json(users);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
+  async updateStatus(req, res, next) {
+    try {
+      const { id } = req.params;
+      const user = await user_data.findOne({ where: { id } });
+      if (!user) {
+        next(ApiError.internal("Такого пользователя не существует"));
+      } else {
+        res.json(user);
+      }
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
   }
 }
 
