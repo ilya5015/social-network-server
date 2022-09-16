@@ -25,6 +25,18 @@ class UserDataController {
     }
   }
 
+  async getAuthUser(req, res, next) {
+    try {
+      const { id } = req.user;
+      console.log("USER DATA FROM TOKEN IS", req.user.id);
+      const user = await user_data.findOne({ where: { id } });
+      console.log("USER IS", user);
+      return res.json(user);
+    } catch (e) {
+      next(ApiError.badRequest(e.message));
+    }
+  }
+
   async updateStatus(req, res, next) {
     try {
       const { id } = req.user;
