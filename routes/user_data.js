@@ -10,4 +10,8 @@ userDataRouter.post(
   authMiddleware,
   userDataController.updateStatus
 );
-userDataRouter.get("/authuser", authMiddleware, userDataController.getAuthUser);
+userDataRouter.get(
+  "/authuserinfo",
+  authMiddleware,
+  userDataController.getAuthUserInfo
+);

@@ -72,12 +72,12 @@ class UserAuthDataController {
     return res.json({ message: "Working!", token });
   }
 
-  async getUserData(req, res, next) {
+  async getAuthUserData(req, res, next) {
     try {
-      console.log("req query is", req.params);
-      const { id } = req.params;
-      let user;
-      user = await user_auth_data.findOne({ where: { id } });
+      const { id } = req.user;
+      console.log("USER DATA FROM TOKEN IS", req.user.id);
+      const user = await user_auth_data.findOne({ where: { id } });
+      console.log("USER IS", user);
       return res.json(user);
     } catch (e) {
       next(ApiError.badRequest(e.message));

@@ -25,7 +25,7 @@ class UserDataController {
     }
   }
 
-  async getAuthUser(req, res, next) {
+  async getAuthUserInfo(req, res, next) {
     try {
       const { id } = req.user;
       console.log("USER DATA FROM TOKEN IS", req.user.id);
