@@ -6,7 +6,8 @@ import { formatMessage } from "../tools/createMessageForm.js";
 export const initializeIo = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "*",
+      origin: "http://localhost:3000",
+      credentials: true,
     },
   });
 

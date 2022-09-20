@@ -20,8 +20,10 @@ export const authMiddlewareIo = (socket, next) => {
   //   next(new Error("invalid"));
   // }
   try {
-    if (socket.handshake.headers.cookie) {
-      const token = socket.handshake.headers.cookie.jwt;
+    console.log(socket.handshake.headers.cookie);
+    if (socket.request.cookies) {
+      console.log("token is ", socket.request.cookies.token);
+      const token = socket.request.cookies.token;
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
       socket.user = decoded;
       console.log("socket is", socket);
