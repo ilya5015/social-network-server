@@ -2,6 +2,7 @@ import cookieParser from "socket.io-cookie-parser";
 import { Server } from "socket.io";
 import { authMiddlewareIo } from "../middleware/authMiddlewareIo.js";
 import { formatMessage } from "../tools/createMessageForm.js";
+import { user_data } from "../models/models.js";
 
 export const initializeIo = (server) => {
   const io = new Server(server, {
@@ -25,8 +26,11 @@ export const initializeIo = (server) => {
       )
     );
     // Listen to the message
-    socket.on("chatMessage", (msg) => {
-      const message = formatMessage(socket.user.login, "", msg);
+    socket.on("chatMessage", async (msg) => {
+      const { id } = socket.user;
+      console.log("id is", socket.user);
+      const user = await user_data.findOne({ where: { id } });
+      const message = formatMessage(user.login, user.name, msg);
       io.emit("message", message);
     });
 
