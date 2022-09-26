@@ -22,12 +22,9 @@ export const authMiddlewareIo = (socket, next) => {
   try {
     console.log(socket.handshake.headers.cookie);
     if (socket.request.cookies) {
-      console.log("token is ", socket.request.cookies.token);
       const token = socket.request.cookies.token;
       const decoded = jwt.verify(token, process.env.SECRET_KEY);
-      console.log("decoded is", decoded);
       socket.user = decoded;
-      console.log("socket is", socket);
       next();
     } else {
       console.log("Not authorized");

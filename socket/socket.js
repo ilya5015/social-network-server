@@ -6,6 +6,7 @@ import { user_data } from "../models/models.js";
 
 export const initializeIo = (server) => {
   const io = new Server(server, {
+    path: "/socketchat",
     cors: {
       origin: "http://localhost:3000",
       credentials: true,
@@ -17,7 +18,8 @@ export const initializeIo = (server) => {
 
   io.on("connection", (socket) => {
     // Welcome new user
-    io.emit(
+    console.log("User connected");
+    socket.broadcast.emit(
       "message",
       formatMessage(
         "FaceBook killer bot",
@@ -27,11 +29,11 @@ export const initializeIo = (server) => {
     );
     // Listen to the message
     socket.on("chatMessage", async (msg) => {
+      console.log("chatMessage");
       const { id } = socket.user;
-      console.log("id is", socket.user);
       const user = await user_data.findOne({ where: { id } });
       const message = formatMessage(user.login, user.name, msg);
-      io.emit("message", message);
+      socket.emit("message", message);
     });
 
     // Listen to disconnect
