@@ -13,3 +13,15 @@ export const user_auth_data = sequelize.define("user_auth_data", {
   login: { type: DataTypes.STRING, unique: true },
   password: { type: DataTypes.STRING, unique: false },
 });
+
+export const messages_data = sequelize.define("messages_data", {
+  message_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  message_text: { type: DataTypes.STRING },
+  sender_id: { type: DataTypes.INTEGER },
+  sender_name: { type: DataTypes.STRING },
+  message_time: { type: DataTypes.STRING },
+});
