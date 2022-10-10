@@ -1,10 +1,9 @@
-import moment from "moment/moment.js";
-
-export const formatMessage = (id, name, text) => {
+export const formatMessage = (messageId, senderId, name, text, time) => {
   return {
-    id,
+    messageId,
+    senderId,
     name,
     text,
-    time: moment().format("h:mm a"),
+    time,
   };
 };
