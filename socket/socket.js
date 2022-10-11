@@ -29,7 +29,7 @@ export const initializeIo = (server) => {
       );
     });
 
-    socket.broadcast.emit("chatMessages", messages);
+    socket.emit("chatMessages", messages);
 
     socket.broadcast.emit(
       "message",
