@@ -25,3 +25,33 @@ export const messages_data = sequelize.define("messages_data", {
   sender_name: { type: DataTypes.STRING },
   message_time: { type: DataTypes.STRING },
 });
+
+export const threads_data = sequelize.define("threads_data", {
+  thread_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  title: { type: DataTypes.STRING },
+  founder_id: { type: DataTypes.INTEGER },
+  founder_name: { type: DataTypes.STRING },
+  thread_text: { type: DataTypes.STRING },
+  imgs: { type: DataTypes.STRING },
+  thread_time: { type: DataTypes.STRING },
+});
+
+export const threads_replies_data = sequelize.define("threads_replies_data", {
+  reply_id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  reply_sender_id: { type: DataTypes.INTEGER },
+  reply_sender_name: { type: DataTypes.STRING },
+  reply_sender_role: { type: DataTypes.STRING },
+  reply_text: {
+    type: DataTypes.STRING,
+  },
+  imgs: { type: DataTypes.STRING },
+  reply_time: { type: DataTypes.STRING },
+});
