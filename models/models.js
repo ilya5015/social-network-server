@@ -41,6 +41,7 @@ export const threads_data = sequelize.define("threads_data", {
 });
 
 export const threads_replies_data = sequelize.define("threads_replies_data", {
+  parent_thread_id: { type: DataTypes.INTEGER },
   reply_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
