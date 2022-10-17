@@ -1,5 +1,6 @@
-import { threads_data } from "../../models/models.js";
+import { threads_data, user_data } from "../../models/models.js";
 import { ApiError } from "../../error/ApiError.js";
+import moment from "moment";
 
 class ThreadsDataController {
   async getThread(req, res, next) {
@@ -30,21 +31,15 @@ class ThreadsDataController {
   async createNewThread(req, res, next) {
     try {
       const { id } = req.user;
-      const {
-        title,
-        founder_id,
-        founder_name,
-        thread_text,
-        imgs,
-        thread_time,
-      } = req.body;
+      const { title, thread_text, imgs } = req.body;
+      const user = await user_data.findOne({ where: { id } });
       const newCreatedThread = await threads_data.create({
         title,
-        founder_id,
-        founder_name,
+        founder_id: id,
+        founder_name: user.name,
         thread_text,
         imgs,
-        thread_time,
+        thread_time: moment().format("h:mm a"),
       });
       if (!newCreatedThread) {
         next(ApiError.internal("Не удалось создать thread"));
