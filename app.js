@@ -28,9 +28,10 @@ app.use(
   })
 );
 
+app.use(fileUpload({}));
+app.use(express.static(path.resolve(__dirname, "static")));
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static(path.resolve(__dirname, "static")));
 app.use("/api", router);
 
 // Обработка ошибок
