@@ -2,7 +2,11 @@ import { threads_data, user_data } from "../../models/models.js";
 import { ApiError } from "../../error/ApiError.js";
 import moment from "moment";
 import { v4 as uuidv4 } from "uuid";
-import path from "path";
+import path, { dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 class ThreadsDataController {
   async getThread(req, res, next) {
@@ -33,9 +37,12 @@ class ThreadsDataController {
   async createNewThread(req, res, next) {
     try {
       const { id } = req.user;
-      const { title, thread_text, imgs } = req.body;
+      console.log("request is", req.files);
+      const imgs = [req.files];
+      const { title, thread_text } = req.body;
 
       let fileNames = [];
+      console.log("IMGS IS", imgs);
 
       imgs.forEach((img) => {
         let fileName = uuidv4() + ".jpg";
@@ -45,6 +52,17 @@ class ThreadsDataController {
       console.log("imgs ARREEEE", imgs);
 
       const user = await user_data.findOne({ where: { id } });
+      console.log("user data", user);
+      console.log(
+        "path is",
+        path.resolve(__dirname, "..", "..", "public", fileNames[0])
+      );
+      imgs[0].mv(
+        path.resolve(__dirname, "..", "..", "public", fileNames[0]),
+        (err) => {
+          console.log("error", err);
+        }
+      );
       const newCreatedThread = await threads_data.create({
         title,
         founder_id: id,
@@ -53,18 +71,12 @@ class ThreadsDataController {
         imgs: fileNames,
         thread_time: moment().format("h:mm a"),
       });
+      console.log("new thread", newCreatedThread);
       if (!newCreatedThread) {
+        console.log("ERROOOOOOOOOOOOOOR");
         next(ApiError.internal("Не удалось создать thread"));
       } else {
-        imgs.forEach((img, index) => {
-          console.log(
-            "path is",
-            path.resolve(__dirname, "..", "..", "static", fileNames[index])
-          );
-          img.mv(
-            path.resolve(__dirname, "..", "..", "static", fileNames[index])
-          );
-        });
+        console.log("Moved");
       }
     } catch (e) {
       next(ApiError.badRequest(e.message));
