@@ -36,7 +36,7 @@ export const threads_data = sequelize.define("threads_data", {
   founder_id: { type: DataTypes.INTEGER },
   founder_name: { type: DataTypes.STRING },
   thread_text: { type: DataTypes.STRING },
-  imgs: { type: DataTypes.STRING },
+  imgs: { type: DataTypes.ARRAY(DataTypes.STRING) },
   thread_time: { type: DataTypes.STRING },
 });
 
@@ -53,6 +53,6 @@ export const threads_replies_data = sequelize.define("threads_replies_data", {
   reply_text: {
     type: DataTypes.STRING,
   },
-  imgs: { type: DataTypes.STRING },
+  imgs: { type: DataTypes.ARRAY(DataTypes.STRING) },
   reply_time: { type: DataTypes.STRING },
 });
