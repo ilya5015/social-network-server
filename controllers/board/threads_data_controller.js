@@ -51,6 +51,7 @@ class ThreadsDataController {
         next(ApiError.internal("Не удалось создать thread"));
       } else {
         console.log("Moved");
+        return res.json(newCreatedThread);
       }
     } catch (e) {
       next(ApiError.badRequest(e.message));
