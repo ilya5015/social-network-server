@@ -42,7 +42,7 @@ class ThreadsDataController {
         founder_id: id,
         founder_name: user.name,
         thread_text,
-        imgs: [],
+        imgs: files.map((file) => file.filename),
         thread_time: moment().format("h:mm a"),
       });
       console.log("New created thread", newCreatedThread);
