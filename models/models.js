@@ -56,3 +56,12 @@ export const threads_replies_data = sequelize.define("threads_replies_data", {
   imgs: { type: DataTypes.ARRAY(DataTypes.STRING) },
   reply_time: { type: DataTypes.STRING },
 });
+
+threads_data.hasMany(threads_replies_data, {
+  foreignKey: "parent_thread_id",
+  onDelete: "CASCADE",
+});
+
+threads_replies_data.belongsTo(threads_data, {
+  foreignKey: "parent_thread_id",
+});
