@@ -36,20 +36,21 @@ class ThreadsRepliesDataController {
   async createNewThreadReply(req, res, next) {
     try {
       const { id } = req.user;
-      const { parentThreadId, replyText } = req.body;
-      console.log("Req body is", req.body);
+      const { parent_thread_id, reply_text } = req.body;
+      console.log("Req body is", req.body, Number(parent_thread_id));
+      const files = req.files;
       const user = await user_data.findOne({ where: { id } });
       console.log("User is", user);
       const newCreatedThreadReply = await threads_replies_data.create({
-        parent_thread_id: parentThreadId,
+        parent_thread_id: Number(parent_thread_id),
         reply_sender_id: id,
         reply_sender_name: user.name,
         reply_sender_role: "coco",
-        reply_text: replyText,
-        imgs: ["dasd"],
+        reply_text,
+        imgs: files.map((file) => file.filename),
         reply_time: moment().format("h:mm a"),
       });
-      console.log("New created thread", newCreatedThreadReply);
+      console.log("New created thread reply", newCreatedThreadReply);
       if (!newCreatedThreadReply) {
         console.log("ERROOOOOOOOOOOOOOR");
         next(ApiError.internal("Не удалось создать thread reply"));
