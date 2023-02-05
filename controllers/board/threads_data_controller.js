@@ -1,4 +1,5 @@
 import { threads_data, user_data } from "../../models/models.js";
+import { threads_replies_data } from "../../models/models.js";
 import { ApiError } from "../../error/ApiError.js";
 import moment from "moment";
 import multer from "multer";
@@ -22,8 +23,25 @@ class ThreadsDataController {
 
   async getAllThreads(req, res, next) {
     try {
-      const threads = await threads_data.findAll();
-      return res.json(threads);
+      let threads = await threads_data.findAll();
+      const threadsReplies = await threads_replies_data.findAll();
+      let threadsWithReplies = threads.map((thread) => {
+        console.log("threadsWithReplies", thread);
+        let replies = [];
+        threadsReplies.forEach((reply) => {
+          console.log("reply", reply);
+          if (
+            reply.dataValues.parent_thread_id === thread.dataValues.thread_id
+          ) {
+            replies.push(reply);
+          }
+        });
+        thread.dataValues["replies"] = replies;
+
+        return thread;
+      });
+      console.log("Get all threads", threadsWithReplies);
+      return res.json(threadsWithReplies);
     } catch (e) {
       next(ApiError.badRequest(e.message));
     }
