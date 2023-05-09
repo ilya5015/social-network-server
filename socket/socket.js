@@ -1,7 +1,7 @@
 import cookieParser from "socket.io-cookie-parser";
 import { Server } from "socket.io";
 import { authMiddlewareIo } from "../middleware/authMiddlewareIo.js";
-import { formatMessage } from "../tools/createMessageForm.js";
+import { formatMessage } from "./tools/createMessageForm.js";
 import { messages_data, user_data } from "../models/models.js";
 import moment from "moment/moment.js";
 

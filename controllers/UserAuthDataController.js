@@ -1,4 +1,4 @@
-import { ApiError } from "../error/ApiError.js";
+import { ApiError } from "./errors/ErrorController.js";
 import { user_auth_data, user_data } from "../models/models.js";
 import { authMiddleware } from "../middleware/authMiddleware.js";
 import * as bcrypt from "bcrypt";

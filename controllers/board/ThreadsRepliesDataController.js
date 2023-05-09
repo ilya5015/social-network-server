@@ -1,7 +1,7 @@
 import { threads_replies_data } from "../../models/models.js";
 import { threads_data } from "../../models/models.js";
 import { user_data } from "../../models/models.js";
-import { ApiError } from "../../error/ApiError.js";
+import { ApiError } from "../errors/ErrorController.js";
 import moment from "moment";
 
 class ThreadsRepliesDataController {

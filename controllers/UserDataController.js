@@ -1,4 +1,4 @@
-import { ApiError } from "../error/ApiError.js";
+import { ApiError } from "./errors/ErrorController.js";
 import { user_data } from "../models/models.js";
 
 class UserDataController {

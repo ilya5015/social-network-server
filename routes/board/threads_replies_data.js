@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { threadsRepliesDataController } from "../../controllers/board/threads_replies_data_controller.js";
+import { threadsRepliesDataController } from "../../controllers/board/ThreadsRepliesDataController.js";
 import { authMiddleware } from "../../middleware/authMiddleware.js";
 import { v4 as uuidv4 } from "uuid";
 

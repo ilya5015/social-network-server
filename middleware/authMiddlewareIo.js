@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { ApiError } from "../error/ApiError.js";
 
 export const authMiddlewareIo = (socket, next) => {
   // try {

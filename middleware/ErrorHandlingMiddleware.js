@@ -1,4 +1,4 @@
-import { ApiError } from "../error/ApiError.js";
+import { ApiError } from "../controllers/errors/ErrorController.js";
 
 export const errorHandlingMiddleware = function (err, req, res, next) {
   if (err instanceof ApiError) {

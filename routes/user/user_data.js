@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { userDataController } from "../controllers/user_data_controller.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { userDataController } from "../../controllers/userDataController.js";
+import { authMiddleware } from "../../middleware/authMiddleware.js";
 export const userDataRouter = new Router();
 
 userDataRouter.get("/user/:id", userDataController.getUser);

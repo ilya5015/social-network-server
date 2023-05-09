@@ -1,6 +1,6 @@
 import { threads_data, user_data } from "../../models/models.js";
 import { threads_replies_data } from "../../models/models.js";
-import { ApiError } from "../../error/ApiError.js";
+import { ApiError } from "../errors/ErrorController.js";
 import moment from "moment";
 import multer from "multer";
 
